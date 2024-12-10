@@ -227,4 +227,38 @@ router.patch(
   }
 );
 
+// Route DELETE - Menghapus Data Post Berdasarkan ID
+router.delete("/:id", function (req, res) {
+  const postId = req.params.id;
+
+  // Periksa apakah id ada, jika tidak kembalikan error
+  if (!postId) {
+    return res.status(403).json({
+      message: "Id Tidak Dapat Ditemukan",
+    });
+  }
+  // Menghapus post berdasarkan id
+  connection.query(
+    "DELETE FROM posts WHERE id = ?",
+    [postId],
+    function (error, results) {
+      if (error) {
+        return res.status(500).json({
+          status: false,
+          message: error.message,
+        });
+      } else if (results.affectedRows === 0) {
+        return res.status(404).json({
+          status: false,
+          message: "Data tidak ditemukan",
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          message: "Data berhasil dihapus",
+        });
+      }
+    }
+  );
+});
 module.exports = router;
