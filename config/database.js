@@ -2,11 +2,11 @@ let mySql = require("mysql"); // import library mysql
 
 // membuat koneksi database mysql
 let connection = mySql.createConnection({
-  host: "localhost",
-  port: 3006,
-  user: "root",
-  password: "",
-  database: "api-charFilm",
+  host: "localhost", // server mysql
+  port: 3006, // port server mysql
+  user: "root", // username mysql default nya root
+  password: "", // password mysql default nya kosong
+  database: "api-charFilm", // nama database yang di gunakan
 });
 
 connection.connect(function (error) {
