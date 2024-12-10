@@ -1,6 +1,7 @@
 const express = require("express");
 const connection = require("../config/database");
-
+// Import body-parser validator
+const { body, validationResult } = require("express-validator");
 // Inisialisasi router
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.get("/", function (req, res) {
   );
 });
 
-router.get("/data/:id", function (req, res) {
+router.get("/:id", function (req, res) {
   const { id } = req.params; // mengambil id dari permintaan user yang dari params id
   // jika tidak ada id nya maka kembalikan error
   if (!id) {
@@ -59,5 +60,86 @@ router.get("/data/:id", function (req, res) {
     }
   );
 });
+
+// Route POST - Menambahkan Data Post Baru
+router.post(
+  "/store",
+  [
+    // Validasi inputan
+    body("nama_pemeran").notEmpty(),
+    body("umur_pemeran").notEmpty(),
+    body("umur_tokoh").notEmpty(),
+    body("gender").notEmpty(),
+    body("kepribadian").notEmpty(),
+    body("peran_tokoh").notEmpty(),
+    body("sifat_tokoh").notEmpty(),
+    body("ciri_fisik").notEmpty(),
+    body("latar_belakang").notEmpty(),
+  ],
+  function (req, res) {
+    // Menangani validasi
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        status: false,
+        message: "Validasi gagal",
+        errors: errors.array(),
+      });
+    }
+
+    const {
+      nama_pemeran,
+      umur_pemeran,
+      latar_belakang,
+      ciri_fisik,
+      sifat_tokoh,
+      peran_tokoh,
+      kepribadian,
+      gender,
+      umur_tokoh,
+    } = req.body;
+
+    // Menyimpan data baru ke tabel posts
+    connection.query(
+      "INSERT INTO posts (nama_pemeran, umur_pemeran, umur_tokoh, gender, kepribadian, peran_tokoh, sifat_tokoh, ciri_fisik, latar_belakang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        nama_pemeran,
+        umur_pemeran,
+        umur_tokoh,
+        gender,
+        kepribadian,
+        peran_tokoh,
+        sifat_tokoh,
+        ciri_fisik,
+        latar_belakang,
+      ],
+      function (error, results) {
+        if (error) {
+          return res.status(500).json({
+            status: false,
+            message: error.message,
+          });
+        } else {
+          return res.status(201).json({
+            status: true,
+            message: "Post baru berhasil ditambahkan",
+            data: {
+              id: results.insertId,
+              nama_pemeran,
+              umur_pemeran,
+              umur_tokoh,
+              gender,
+              kepribadian,
+              peran_tokoh,
+              sifat_tokoh,
+              ciri_fisik,
+              latar_belakang,
+            },
+          });
+        }
+      }
+    );
+  }
+);
 
 module.exports = router;
