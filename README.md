@@ -22,5 +22,7 @@ get by id non
 update by id
 ![Screenshot 2024-12-10 184703](https://github.com/user-attachments/assets/c053b0ba-8b15-4128-acba-3cb74ee6a89b)
 
-delete by id
+delete by id![Screenshot 2024-12-13 091500](https://github.com/user-attachments/assets/6fb4676b-27b0-4721-8b5f-3a4a706f997e)
+
+create
 ![Screenshot 2024-12-10 184831](https://github.com/user-attachments/assets/54a4b72d-2204-4eab-bffc-ab77b5d0e68e)
