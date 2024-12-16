@@ -11,11 +11,15 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// iniliasasi public folder. biar di browser bisa di akses
+app.use(express.static("public"));
+app.use("/assets", express.static("assets"));
+
 // inisialisasi port
 const port = 3000;
 
 // membuat route home page
-app.get("/", (req, res) => {
+app.get("/walawe", (req, res) => {
   res.send("Halo Cia cantik");
 });
 
