@@ -15,7 +15,7 @@ koneksi.connect(function (error) {
     // jika koneksi gagal
     console.log(error);
   } else {
-    // jika koneksi berhasil
+    // jika koneksi berhasil akan masuk
     console.log("koneksi database berhasil");
   }
 });
