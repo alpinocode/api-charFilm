@@ -1,6 +1,8 @@
 // import library yang di butuhkan
 const express = require("express");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+dotenv.config();
 
 // import route
 const postsRouter = require("./routes/post");
@@ -11,11 +13,15 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// iniliasasi public folder. biar di browser bisa di akses
+app.use(express.static("public"));
+app.use("/assets", express.static("assets"));
+
 // inisialisasi port
-const port = 3000;
+const port = process.env.PORT;
 
 // membuat route home page
-app.get("/", (req, res) => {
+app.get("/walawe", (req, res) => {
   res.send("Halo Cia cantik");
 });
 

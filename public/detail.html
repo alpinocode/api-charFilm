@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posts Cards</title>
+    <style>
+      /* Import Google Font Poppins */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+      /* Global Styles */
+      body {
+        font-family: "Poppins", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f4f8, #d9e4f5);
+      }
+      h1 {
+        text-align: center;
+        margin: 20px 0;
+        color: white;
+        font-size: 28px;
+        font-weight: 600;
+      }
+
+      /* Navbar Styles */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #0066ff;
+        padding: 15px 25px;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      nav h2 {
+        color: #f5f5f5;
+        font-size: 24px;
+        font-weight: 600;
+        margin-left: 200px;
+      }
+
+      /* Hero Section */
+      .hero {
+        background: #0066ff;
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+        margin-top: 80px; /* Adjusted for fixed navbar */
+        border-radius: 0 0 15px 15px;
+      }
+
+      /* Hero Styles */
+      .hero h1 {
+        margin: 0;
+        font-size: 36px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .back-icon {
+        display: flex;
+        justify-content: start;
+        margin-left: 200px;
+      }
+
+      /* Posts Section Styles */
+      #posts {
+        display: grid;
+        padding: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* style untuk card */
+      .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        height: auto;
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        cursor: pointer;
+      }
+
+      /*  ketika cursor di dekatkan card  maka berikan efek */
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgb(200, 150, 255);
+      }
+
+      /* setiap image di dalam card nya di height 300px */
+      .card img {
+        width: 100%;
+        height: 1000px;
+        object-fit: cover;
+      }
+
+      /* mengatur h2 di dalam card */
+      .card h2 {
+        display: flex;
+        margin: 15px 10px 5px;
+        font-size: 3rem;
+        margin-top: 20px;
+        font-weight: bold;
+        justify-content: center;
+      }
+      /* mengatur h4 di dalam card */
+      .card h4 {
+        margin: 5px 10px;
+        font-size: 30px;
+        width: 30%;
+        color: #0a0a0a;
+        font-weight: bold;
+      }
+      .card p {
+        color: #797575;
+        font-weight: bold;
+        width: 65%;
+      }
+
+      /* mengatur  div classnaeme card-deskripsiContent */
+      .card .card-deskripsiContent {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        gap: 15px;
+        flex-wrap: wrap; /* Membuat elemen membungkus di baris baru jika ruang tidak cukup */
+      }
+
+      .cardContentText {
+        display: flex;
+        flex-direction: row;
+      }
+
+      /* mengatur div classnaeme cardContent menjadi box item */
+      .card .cardContent {
+        background-color: rgb(181, 4, 235);
+        color: white;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+        min-width: 120px; /* Memberikan batasan lebar minimum */
+        flex: 1 1 120px; /* Membuat elemen flex item lebih fleksibel dan tetap teratur */
+        height: auto;
+        text-align: center;
+      }
+
+      /* Responsive untuk mobile view */
+      @media screen and (max-width: 768px) {
+        .hero h1 {
+          font-size: 28px;
+        }
+
+        nav h2 {
+          font-size: 20px;
+          margin-left: 20px !important; /* membuat margin yang di dekstop gk masuk ke responsive mobile */
+        }
+        .back-icon {
+          margin-left: 20px !important;
+        }
+
+        .card h4 {
+          margin: 5px 10px;
+          font-size: 30px;
+          width: 40% !important;
+        }
+        .card p {
+          color: #797575;
+          font-weight: bold;
+          margin-left: 10%;
+          width: 50% !important;
+        }
+      }
+
+      /* Custom card styles for mobile */
+      @media screen and (max-width: 480px) {
+        .card {
+          flex-direction: column; /* Card stacks vertically on smaller screens */
+        }
+
+        .card img {
+          height: 200px; /* Reduced image height for smaller screens */
+        }
+
+        .card .card-deskripsiContent {
+          flex-direction: column; /* Stack content vertically */
+          align-items: flex-start; /* Align content to the left */
+        }
+
+        .card .cardContent {
+          gap: 20px;
+        }
+        .card h4 {
+          margin: 5px 10px;
+          font-size: 30px;
+          width: 40% !important;
+        }
+        .card p {
+          color: #797575;
+          font-weight: bold;
+          width: 55% !important;
+        }
+        .card .cardContent {
+          min-width: 100%; /* Make boxes take full width on mobile */
+        }
+        .back-icon {
+          margin-top: 20px !important;
+          margin-left: 20px !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar Header -->
+    <nav>
+      <h2>API Char Film</h2>
+    </nav>
+
+    <div style="display: flex; flex-direction: row; margin-left: 20px">
+      <button id="backButton">Kembali</button>
+    </div>
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Selamat Datang Di Halaman API Chart Film</h1>
+      <!-- back button -->
+      <img
+        src="./image/icons8-back-64.png"
+        alt="Back Icon"
+        id="back-icon"
+        class="back-icon"
+      />
+    </div>
+
+    <!-- Posts Section -->
+    <div id="posts"></div>
+
+    <script>
+      // Fungsi untuk mengambil parameter dari URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search); // Mendapatkan parameter dari URL
+        return urlParams.get(param); // Mengembalikan nilai parameter
+      }
+
+      // Ambil ID dari URL
+      const id = getQueryParam("id");
+
+      if (id) {
+        // Gunakan ID untuk memuat detail data
+        fetchDetail(id);
+      } else {
+        // Jika ID tidak ada, tampilkan pesan error
+        console.error("ID tidak ditemukan di URL");
+      }
+
+      // Fungsi untuk memuat detail data berdasarkan ID
+      function fetchDetail(id) {
+        fetch(`http://localhost:3000/api/posts/${id}`)
+          .then((response) => response.json())
+          .then((detail) => {
+            renderDetail(detail.data);
+          })
+          .catch((error) => console.error("Error fetching detail:", error));
+      }
+      // back-icon button
+      const backButton = document.getElementById("back-icon");
+      backButton.addEventListener("click", () => {
+        window.location.href = "./index.html";
+      });
+
+      // Fungsi untuk menampilkan data detail ke dalam HTML
+      function renderDetail(data) {
+        // dapatkan element class id posts
+        const postsContainer = document.getElementById("posts");
+        postsContainer.innerHTML = ""; // kosongkan element posts
+        // buat element card
+        const card = document.createElement("div");
+        card.className = "card"; // berikan classname card ke divnya
+
+        // element image
+        const imgElement = document.createElement("img");
+        imgElement.src = data.imagePemeran; // tampilkan datanya image dari backend
+        imgElement.alt = "Post Image"; // berikan alt untuk image
+        card.appendChild(imgElement); // tambahkan img ke card
+
+        // judul pemeran
+        const pemainElement = document.createElement("h2"); // buat element h2
+        pemainElement.textContent = data.nama_pemeran; // tampilkan datanya nama_pemeran dari backend
+        card.appendChild(pemainElement); // tambahkan pemainElement ke card
+
+        // deskripsi content pemeran
+        const deskripsiContentBorder = document.createElement("div"); // buat element div
+        deskripsiContentBorder.className = "card-deskripsiContent"; // berikan classname card-deskripsiContent
+
+        const umurPemeranBox = document.createElement("div"); // buat element div
+        umurPemeranBox.className = "cardContent"; // berikan classname cardContent
+        umurPemeranBox.textContent = `Umur Pemeran: ${data.umur_pemeran} Tahun`; // tampilkan datanya umur_pemeran dari backend
+        deskripsiContentBorder.appendChild(umurPemeranBox); // tambahkan umurPemeranBox ke dalam div yang classnamenya deskripsiContentBorder
+
+        const umurTokohBox = document.createElement("div"); // buat element div
+        umurTokohBox.className = "cardContent"; // berikan classname cardContent
+        umurTokohBox.textContent = `Umur Tokoh: ${data.umur_tokoh} Tahun`; // tampilkan datanya umur_tokoh dari backend
+        deskripsiContentBorder.appendChild(umurTokohBox); // tambahkan umurTokohBox ke dalam div yang classnamenya deskripsiContentBorder
+
+        const genderBox = document.createElement("div"); // buat element div
+        genderBox.className = "cardContent"; // berikan classname cardContent
+        genderBox.textContent = `Gender: ${data.gender}`; // tampilkan datanya gender dari backend
+        deskripsiContentBorder.appendChild(genderBox); // tambahkan genderBox ke dalam div yang classnamenya deskripsiContentBorder
+
+        card.appendChild(deskripsiContentBorder); // tambahkan div classnamenya deskripsiContent kedalam div classnamenya card
+
+        // membuat element deskripsi tokoh
+        const deskripsiPemainDiv = document.createElement("div"); // buat element div
+        deskripsiPemainDiv.className = "cardContentText"; // berikan classname cardContent
+
+        const deskripsiPemain = document.createElement("h4"); // buat element h4
+        deskripsiPemain.textContent = `Deksripsi Tokoh:`; // tampilkan Deksripsi Tokoh
+        deskripsiPemainDiv.appendChild(deskripsiPemain); // tambahkan deskripsiPemain ke dalam div classnamenya card
+
+        const textdeskripsiPemain = document.createElement("p"); // buat element p
+        textdeskripsiPemain.textContent = `${data.latar_belakang}`; // tampilkan datanya latar_belakang dari backend
+        deskripsiPemainDiv.appendChild(textdeskripsiPemain); // tambahkan textdeskripsiPemain ke dalam div classnamenya card
+        card.appendChild(deskripsiPemainDiv);
+
+        // membuat element peran tokoh
+        const peranTokohDiv = document.createElement("div"); // buat element div
+        peranTokohDiv.className = "cardContentText"; // berikan classname cardContent
+
+        const peranTokoh = document.createElement("h4"); // buat element h4
+        peranTokoh.textContent = `Peran Tokoh :`; // tampilkan judul peran tokoh
+        peranTokohDiv.appendChild(peranTokoh); // tambahkan peranTokoh ke dalam div classnamenya card
+
+        const textperanTokoh = document.createElement("p"); // buat element p
+        textperanTokoh.textContent = `${data.peran_tokoh}`; // tampilkan datanya peran_tokoh dari backend
+        peranTokohDiv.appendChild(textperanTokoh); // tambahkan textperanTokoh ke dalam div classnamenya card
+        card.appendChild(peranTokohDiv);
+
+        // membuat element kepribadian tokoh
+        const kepribadianTokohDiv = document.createElement("div"); // buat element div
+        kepribadianTokohDiv.className = "cardContentText"; // berikan classname cardContent
+
+        const kepribadianTokoh = document.createElement("h4"); // buat element h4
+        kepribadianTokoh.textContent = `Kepribadian Tokoh :`; // tampilkan judul kepribadian tokoh
+        kepribadianTokohDiv.appendChild(kepribadianTokoh); // tambahkan kepribadianTokoh ke dalam div classnamenya card
+
+        const textkepribadianTokoh = document.createElement("p"); // buat element p
+        textkepribadianTokoh.textContent = `${data.kepribadian}`; // tampilkan datanya kepribadian dari backend
+        kepribadianTokohDiv.appendChild(textkepribadianTokoh); // tambahkan textkepribadianTokoh ke dalam div classnamenya card
+        card.appendChild(kepribadianTokohDiv);
+
+        // membuat element sifat tokoh
+        const sifatTokohDiv = document.createElement("div"); // buat element div
+        sifatTokohDiv.className = "cardContentText"; // berikan classname cardContent
+
+        const sifatTokoh = document.createElement("h4"); // buat element h4
+        sifatTokoh.textContent = `Sifat Tokoh :`; // tampilkan judul sifat tokoh
+        sifatTokohDiv.appendChild(sifatTokoh); // tambahkan sifatTokoh ke dalam div classnamenya card
+
+        const textSifatTokoh = document.createElement("p"); // buat element p
+        textSifatTokoh.textContent = `${data.sifat_tokoh}`; // tampilkan datanya kepribadian dari backend
+        sifatTokohDiv.appendChild(textSifatTokoh); // tambahkan textSifatTokoh ke dalam div classnamenya card
+
+        card.appendChild(sifatTokohDiv); // tambahkan sifatTokohDiv ke dalam div classnamenya card
+
+        // membuat element fisik tokoh
+        const ciriFisikDiv = document.createElement("div"); // buat element div
+        ciriFisikDiv.className = "cardContentText"; // berikan classname cardContent
+
+        const ciriFisik = document.createElement("h4"); // buat element h4 (bukan h1)
+        ciriFisik.textContent = `Fisik Tokoh :`; // tampilkan judul fisik tokoh
+        ciriFisikDiv.appendChild(ciriFisik); // tambahkan ciriFisik ke dalam div classnamenya card
+
+        const textciriFisik = document.createElement("p"); // buat element p
+        textciriFisik.textContent = `${data.ciri_fisik}`; // tampilkan datanya kepribadian dari backend
+        ciriFisikDiv.appendChild(textciriFisik); // tambahkan textfisikTokoh ke dalam div classnamenya card
+
+        card.appendChild(ciriFisikDiv); // tambahkan fisikTokohDiv ke dalam div classnamenya card
+
+        postsContainer.appendChild(card); // tambahkan card ke div classnamenya postsContainer
+      }
+    </script>
+  </body>
+</html>

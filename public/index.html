@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posts Cards</title>
+    <style>
+      /* Import Google Font Poppins */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+      /* Global Styles */
+      body {
+        font-family: "Poppins", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f4f8, #d9e4f5);
+      }
+      h1 {
+        text-align: center;
+        margin: 20px 0;
+        color: white;
+        font-size: 28px;
+        font-weight: 600;
+      }
+
+      /* Navbar Styles */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #0066ff;
+        padding: 15px 25px;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      nav h2 {
+        color: #f5f5f5;
+        font-size: 24px;
+        font-weight: 600;
+        margin-left: 200px;
+      }
+
+      /* Hero Section */
+      .hero {
+        background: #0066ff;
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+        margin-top: 80px; /* Adjusted for fixed navbar */
+        border-radius: 0 0 15px 15px;
+      }
+
+      /* Hero Styles */
+      .hero h1 {
+        margin: 0;
+        font-size: 36px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* Posts Section Styles */
+      #posts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* style untuk card */
+      .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        cursor: pointer;
+      }
+
+      /*  ketika cursor di dekatkan card  maka berikan efek */
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgb(200, 150, 255);
+      }
+
+      /* setiap image di dalam card nya di height 300px */
+      .card img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+      }
+
+      /* mengatur h2 di dalam card */
+      .card h2 {
+        margin: 15px 10px 5px;
+        font-size: 2rem;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      /* mengatur h3di dalam card */
+      .card h3 {
+        margin: 15px 10px 5px;
+        font-size: 20px;
+        color: #333;
+        margin-top: 20px;
+        font-weight: 600;
+      }
+
+      /* mengatur div classnaeme cardContent menjadi box item */
+      .card .cardContent {
+        background-color: #ff6b6b;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+        flex: 1 1 50%; /* Membuat elemen flex item lebih fleksibel dan tetap teratur */
+        height: auto;
+        text-align: center;
+      }
+
+      .detail-button {
+        margin-top: 20px;
+        background-color: #0a44e2;
+        color: #ffffff;
+        height: 35px;
+        border: none;
+        cursor: pointer;
+        font-size: x-large;
+        font-weight: bold;
+      }
+
+      /* Responsive untuk mobile view */
+      @media screen and (max-width: 768px) {
+        .hero h1 {
+          font-size: 28px;
+        }
+
+        nav h2 {
+          font-size: 20px;
+          margin-left: 20px !important; /* membuat margin yang di dekstop gk masuk ke responsive mobile */
+        }
+      }
+
+      /* Custom card styles for mobile */
+      @media screen and (max-width: 480px) {
+        .card {
+          flex-direction: column; /* Card stacks vertically on smaller screens */
+        }
+
+        .card img {
+          height: 200px; /* Reduced image height for smaller screens */
+        }
+
+        .card .card-deskripsiContent {
+          flex-direction: column; /* Stack content vertically */
+          align-items: flex-start; /* Align content to the left */
+        }
+
+        .card .cardContent {
+          min-width: 100%; /* Make boxes take full width on mobile */
+          margin-bottom: 10px; /* Spacing between boxes */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar Header -->
+    <nav>
+      <h2>API Char Film</h2>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Selamat Datang Di Halaman API Chart Film</h1>
+    </div>
+
+    <!-- Posts Section -->
+    <div id="posts"></div>
+
+    <script>
+      // Panggil fetchPosts saat halaman selesai dimuat
+      document.addEventListener("DOMContentLoaded", fetchPosts);
+
+      // fungsi untuk memanggil data dari backendnya
+      function fetchPosts() {
+        fetch("http://localhost:3000/api/posts")
+          .then((response) => response.json()) // Parse data ke JSON
+          .then((dataPost) => {
+            renderPosts(dataPost.data); // Berikan data ke fungsi renderPosts
+          })
+          .catch((error) => console.error("Error fetching data:", error)); // handle errornya
+      }
+
+      // fungsi yang menampilkan data ke card dan element di dalam cardnya
+      function renderPosts(posts) {
+        // dapatkan element class id posts
+        const postsContainer = document.getElementById("posts");
+        postsContainer.innerHTML = ""; // kosongkan element posts
+
+        // jika tidak ada data
+        if (posts.length === 0) {
+          // tampilkan pesan
+          postsContainer.innerHTML = `<p style="text-align: center; color: #555;">Tidak ada data untuk ditampilkan.</p>`;
+          return;
+        }
+
+        // jika ada data maka lakukan perulangan data yang diambil dari backend
+        posts.forEach((post) => {
+          // buat element card
+          const card = document.createElement("div");
+          card.className = "card"; // berikan classname card ke divnya
+
+          // buat element img
+          const imgElement = document.createElement("img");
+          imgElement.src = post.image; // tampilkan datanya image dari backend
+          imgElement.alt = "Post Image"; // berikan alt untuk image
+          card.appendChild(imgElement); // tambahkan img ke card
+
+          const tokohElement = document.createElement("h2"); // buat element h2
+          tokohElement.textContent = post.nama_tokoh; // tampilkan datanya nama_pemeran dari backend
+          card.appendChild(tokohElement); // tambahkan pemainElement ke card
+
+          const pemainElement = document.createElement("h3");
+          pemainElement.textContent = post.nama_pemeran;
+          card.appendChild(pemainElement);
+
+          postsContainer.appendChild(card); // tambahkan card ke div classnamenya postsContainer
+
+          card.addEventListener("click", () => {
+            // Ketika card diklik, lakukan tindakan yang diinginkan
+            window.location.href = `detail.html?id=${post.id}`;
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

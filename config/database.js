@@ -1,15 +1,15 @@
 let mySql = require("mysql"); // import library mysql
 
 // membuat koneksi database mysql
-let connection = mySql.createConnection({
-  host: "localhost", // server mysql
-  port: 3306, // port server mysql
-  user: "root", // username mysql default nya root
+let koneksi = mySql.createConnection({
+  host: process.env.DB_HOST, // server mysql
+  port: process.env.DB_PORT, // port server mysql
+  user: process.env.DB_USER, // username mysql default nya root
   password: "", // password mysql default nya kosong
-  database: "api-charFilm", // nama database yang di gunakan
+  database: process.env.DB_DATABASE, // nama database yang di gunakan
 });
 
-connection.connect(function (error) {
+koneksi.connect(function (error) {
   // melakukan pengecekanan koneksi database
   if (error) {
     // jika koneksi gagal
@@ -20,5 +20,5 @@ connection.connect(function (error) {
   }
 });
 
-// export connection ke file index.js
-module.exports = connection;
+// export koneksi ke file index.js
+module.exports = koneksi;
